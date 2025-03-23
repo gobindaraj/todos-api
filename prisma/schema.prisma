@@ -14,22 +14,24 @@ datasource db {
 }
 model Todo{
   id                Int @id @default(autoincrement()) // prisma @id le primar laune kaam garxa
+  user_id Int
   title             String  @db.VarChar(191)// string field lai varkar ma lane @db.vacahr lekhio natra text bujhxa string vaneko
   description       String?
   status            Boolean  @default(false)
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
+  user User @relation(fields: [user_id] , references: [id])
   @@map("todos")//quotation vitra j name diyo tein name ko table banxa
 }
 model User{
   id               Int @id @default(autoincrement())
   name             String @db.VarChar(191)
-  email            String @unique 
-  mobile           String?
-  password         String
+  email            String  @db.VarChar(191) @unique 
+  mobile           String   @db.VarChar(15)  @unique
+  password         String  @unique
   created_at       DateTime @default(now())
   updated_at       DateTime @updatedAt
-
+    todos Todo[]
 @@map("users")
 
 }
